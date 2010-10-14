@@ -38,10 +38,6 @@ let g:NERDTreeHijackNetrw = 0
 
 "DBext settings
 let g:dbext_table_names_number = 0
-"let g:dbext_default_profile_rdysrv_dc = 'type=SQLSRV:user=readywiseSA:passwd=l1nuxrams:srvname=rdysrv:host=rdysrv:dbname=democentric'
-"let g:dbext_default_profile_ctl_dc = 'type=SQLSRV:user=sa:passwd=continental*2005:srvname=db01.continentalltd.local:host=db01.continentalltd.local:dbname=democentric'
-"let g:dbext_default_profile_ctl_se = 'type=SQLSRV:user=sa:passwd=continental*2005:srvname=db01.continentalltd.local:host=db01.continentalltd.local:dbname=shoppereventsoperations'
-"let g:dbext_default_profile = 'rdysrv_dc'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn" 
 
 "I prefer to use HTML formatting for my aspx pages
@@ -163,8 +159,3 @@ fun! LaunchExplorer()
     silent! exe ':!explorer '.expand('%:h')
 endf
 
-"fun! LaunchBash()
-    "let mypath = 'cd "'.expand('%:p:h').'"'
-    "echo ':!c:\cygwin\bin\bash.exe --login -i -c '.mypath
-    "silent! exe ':!c:\\cygwin\\bin\\bash.exe --login -i -c '.mypath
-"endf
