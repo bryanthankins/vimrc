@@ -108,6 +108,8 @@ nnoremap <leader><tab> :Sscratch<cr>
 "make getting recent files easy
 nnoremap <leader>rf :MRU<cr>
 
+nnoremap <leader>t :FufFile<cr>
+nnoremap <leader>b :FufBookmarkDir<cr>
 
 "easier than typing noh all the time
 nnoremap <leader><space> :noh<cr>
@@ -144,7 +146,7 @@ nnoremap <C-l> <C-w>l
 let g:user_zen_expandabbr_key = '<c-e>'
 
 "start NERDTree by default
-autocmd VimEnter * NERDTree c:\projects  
+"autocmd VimEnter * NERDTree c:\projects  
 
 "New vim commands to get used to: comma for leader, jj for escape, <leader>ev
 "to edit vimrc, ctrl for moving windows, <leader>tab for scratch, tab for tag
@@ -159,3 +161,18 @@ fun! LaunchExplorer()
     silent! exe ':!explorer '.expand('%:h')
 endf
 
+function! QfMakeConv()
+    let finalList = []
+    let qflist = getqflist()
+    for i in qflist
+        if match(i.text, "[Ee]rror") > 0 
+         call add(finalList,i)
+        endif
+    endfor
+    if len(finalList) == 0
+        "TODO: Add an entry with 'build succeeded'
+    endif
+    call setqflist(finalList)
+endfunction
+
+au QuickfixCmdPost make call QfMakeConv()
