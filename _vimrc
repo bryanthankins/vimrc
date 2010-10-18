@@ -1,7 +1,8 @@
 "basic settings 
 set nocompatible
 "colorscheme zenburn
-set guioptions-=T
+"set guioptions-=T
+set guioptions=ac
 set vb t_vb=
 set nohls
 source $VIMRUNTIME/vimrc_example.vim
@@ -81,6 +82,11 @@ set laststatus=2
 set relativenumber "add back when vim7.3 installed
 "end new settings to explore and document
 
+" Syntax coloring lines that are too long just slows down the world
+set synmaxcol=2048
+" cd to the directory containing the file in the buffer
+nmap  <leader>pwd :lcd %:h<cr>
+
 "make search work well
 set ignorecase
 set smartcase
@@ -128,9 +134,10 @@ set formatoptions=qrn1
 nnoremap <leader>ft Vatzf
 
 "editing vimrc
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-nnoremap <leader>rb <C-w><C-v><C-l>:!ruby %<cr>
-nnoremap <leader>md <C-w><C-v><C-l>:%!mkd.bat<cr>
+nnoremap <leader>sv :so $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>rb :!ruby %<cr>
+nnoremap <leader>md :%!mkd.bat<cr>
 "try instead of remapping capslock
 inoremap jj <ESC>
 
@@ -144,7 +151,18 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 let g:user_zen_expandabbr_key = '<c-e>'
+nmap <leader>w :w!<cr>
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
+inoremap { {<CR><BS>}<Esc>ko
+inoremap ( ()<Esc>i
+set lazyredraw
 
+"Switch to current dir
+map CD :cd %:p:h<cr>
+
+"Select all and copy to + buffer
+map sa :%y +<cr>
 "start NERDTree by default
 "autocmd VimEnter * NERDTree c:\projects  
 
@@ -161,18 +179,4 @@ fun! LaunchExplorer()
     silent! exe ':!explorer '.expand('%:h')
 endf
 
-function! QfMakeConv()
-    let finalList = []
-    let qflist = getqflist()
-    for i in qflist
-        if match(i.text, "[Ee]rror") > 0 
-         call add(finalList,i)
-        endif
-    endfor
-    if len(finalList) == 0
-        "TODO: Add an entry with 'build succeeded'
-    endif
-    call setqflist(finalList)
-endfunction
 
-au QuickfixCmdPost make call QfMakeConv()
